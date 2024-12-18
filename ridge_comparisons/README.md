@@ -8,27 +8,27 @@ In all examples, training stops when 10 consecutive epochs fail to yield an impr
 
 The comparisons are all numbered using a 3-digit code:
 - The first digit is the loss function:
-    0: Just MSELoss.
-    1: MSELoss + &#x2113;<sup>1</sup> size of the weights
-    2: MSELoss + &#x2113;<sup>2</sup> size of the weights
+    - 0: Just MSELoss.
+    - 1: MSELoss + &#x2113;<sup>1</sup> size of the weights
+    - 2: MSELoss + &#x2113;<sup>2</sup> size of the weights
 - The second digit is the model:
-    0: Single Linear layer of size 680 &#x00d7; 91168
-    1: Two Linear layers, first 680 &#x00d7; 680, second 680 &#x00d7; 91168, with ReLU between.
-    2: Three Linear layers, first and second 680 &#x00d7; 680, third 680 &#x00d7; 91168, with ReLU between each pair.
-    3: One Linear layer of size 680 &#x00d7; 91168, prefilled with coefficients calculated from Ridge regression, then trained from that starting point.
-    4: Same as 1, but with the 680 &#x00d7; 91168 linear layer prefilled with Ridge coefficients.
-    5: Same as 2, but with the 680 &#x00d7; 91168 linear layer prefilled with Ridge coefficients.
-    6: Same as 4, but with the Ridge coefficients locked so they are not trained.
-    7: Same as 5, but with the Ridge coefficients locked so they are not trained.
-	8+: I plan to try a couple of models that start with one or more 1D convolutions.
+    - 0: Single Linear layer of size 680 &#x00d7; 91168
+    - 1: Two Linear layers, first 680 &#x00d7; 680, second 680 &#x00d7; 91168, with ReLU between.
+    - 2: Three Linear layers, first and second 680 &#x00d7; 680, third 680 &#x00d7; 91168, with ReLU between each pair.
+    - 3: One Linear layer of size 680 &#x00d7; 91168, prefilled with coefficients calculated from Ridge regression, then trained from that starting point.
+    - 4: Same as 1, but with the 680 &#x00d7; 91168 linear layer prefilled with Ridge coefficients.
+    - 5: Same as 2, but with the 680 &#x00d7; 91168 linear layer prefilled with Ridge coefficients.
+    - 6: Same as 4, but with the Ridge coefficients locked so they are not trained.
+    - 7: Same as 5, but with the Ridge coefficients locked so they are not trained.
+	- 8+: I plan to try a couple of models that start with one or more 1D convolutions.
     <!-- 8: A single 1-D convolution, length 3, stride 1, zero-padding 1, 17 EEG channels as channels, 64 output channels.   -->
 - The third digit is the learning rate:
-    0: Constant learning rate of 0.01
-    1: Constant learning rate of 0.001
-    2: Constant learning rate of 0.0001
-    3: Learning rate starts at 0.01 and then decays by 1% per epoch.
-    4: Learning rate starts at 0.001 and then decays by 1% per epoch.
-    5: Learning rate starts at 0.0001 and then decays by 1% per epoch.
+    - 0: Constant learning rate of 0.01
+    - 1: Constant learning rate of 0.001
+    - 2: Constant learning rate of 0.0001
+    - 3: Learning rate starts at 0.01 and then decays by 1% per epoch.
+    - 4: Learning rate starts at 0.001 and then decays by 1% per epoch.
+    - 5: Learning rate starts at 0.0001 and then decays by 1% per epoch.
 
 ## Results
 
