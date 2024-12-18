@@ -20,6 +20,7 @@ The comparisons are all numbered using a 3-digit code:
     5: Same as 2, but with the 680 &#x00d7; 91168 linear layer prefilled with Ridge coefficients.
     6: Same as 4, but with the Ridge coefficients locked so they are not trained.
     7: Same as 5, but with the Ridge coefficients locked so they are not trained.
+	8+: I plan to try a couple of models that start with one or more 1D convolutions.
     <!-- 8: A single 1-D convolution, length 3, stride 1, zero-padding 1, 17 EEG channels as channels, 64 output channels.   -->
 - The third digit is the learning rate:
     0: Constant learning rate of 0.01
@@ -32,6 +33,10 @@ The comparisons are all numbered using a 3-digit code:
 ## Results
 
 **Ridge regression results**: MSE: 113.3732, Avg Pearson Corr Coeffs: 0.023811
+
+Results below in green are better than this, in red are not better.
+
+Individual missing values are models that gave `nan` values for some reason; I will try to re-run these on CUDA to see if it is an MPS-specific problem (or maybe MacOS 13-specific problem). Entire missing rows are for code I haven't built/run yet.
 
 ### Loss 0 (MSE only)
 
