@@ -34,7 +34,7 @@ The comparisons are all numbered using a 3-digit code:
 
 **Ridge regression results**: MSE: 113.3732, Avg Pearson Corr Coeffs: 0.023811
 
-Results below in green are better than this, in red are not better.
+Values below in bold are better than Ridge, others are not better.
 
 Individual missing values are models that gave `nan` values for some reason; I will try to re-run these on CUDA to see if it is an MPS-specific problem (or maybe MacOS 13-specific problem). Entire missing rows are for code I haven't built/run yet.
 
@@ -55,57 +55,57 @@ Individual missing values are models that gave `nan` values for some reason; I w
 		<td>0.0001<br/>with decay</td>
 	<tr> <!-- 00x -->
 		<td><strong>Model 0</strong></td>
-		<td><span style='color:red'>dist = 113.69</span><br/><span style='color:red'>corr = 0.01247</td><!-- 000 -->
-		<td><span style='color:red'>dist = 113.63</span><br/><span style='color:red'>corr = 0.01892</td><!-- 001 -->
-		<td><span style='color:red'>dist = 113.41</span><br/><span style='color:red'>corr = 0.02340</td><!-- 002 -->
-		<td><span style='color:red'>dist = 113.44</span><br/><span style='color:red'>corr = 0.02308</td><!-- 003 -->
-		<td><span style='color:red'>dist = 113.44</span><br/><span style='color:red'>corr = 0.02311</td><!-- 004 -->
-		<td><span style='color:red'>dist = 113.40</span><br/><span style='color:red'>corr = 0.02357</td><!-- 005 -->
+		<td>dist = 113.69<br/>corr = 0.01247</td><!-- 000 -->
+		<td>dist = 113.63<br/>corr = 0.01892</td><!-- 001 -->
+		<td>dist = 113.41<br/>corr = 0.02340</td><!-- 002 -->
+		<td>dist = 113.44<br/>corr = 0.02308</td><!-- 003 -->
+		<td>dist = 113.44<br/>corr = 0.02311</td><!-- 004 -->
+		<td>dist = 113.40<br/>corr = 0.02357</td><!-- 005 -->
 	</tr>
 	<tr> <!-- 01x -->
 		<td><strong>Model 1</strong></td>
-		<td><span style='color:green'>dist = 107.26</span><br/><span style='color:red'>corr = 0.00923</td><!-- 010 -->
-		<td><span style='color:green'>dist = 98.47</span><br/><span style='color:red'>corr = 0.02268</td><!-- 011 -->
-		<td><span style='color:green'>dist = 112.84</span><br/><span style='color:red'>corr = 0.02289</td><!-- 012 -->
-		<td><span style='color:green'>dist = 95.72</span><br/><span style='color:green'>corr = 0.03457</td><!-- 013 -->
-		<td><span style='color:green'>dist = 98.56</span><br/><span style='color:green'>corr = 0.02435</td><!-- 014 -->
-		<td><span style='color:green'>dist = 112.85</span><br/><span style='color:red'>corr = 0.02307</td><!-- 015 -->
+		<td><strong>dist = 107.26</strong><br/>corr = 0.00923</td><!-- 010 -->
+		<td><strong>dist = 98.47</strong><br/>corr = 0.02268</td><!-- 011 -->
+		<td><strong>dist = 112.84</strong><br/>corr = 0.02289</td><!-- 012 -->
+		<td><strong>dist = 95.72</strong><br/><strong>corr = 0.03457</strong></td><!-- 013 -->
+		<td><strong>dist = 98.56</strong><br/><strong>corr = 0.02435</strong></td><!-- 014 -->
+		<td><strong>dist = 112.85</strong><br/>corr = 0.02307</td><!-- 015 -->
 	</tr>
 	<tr> <!-- 02x -->
 		<td><strong>Model 2</strong></td>
 		<td></td>
-		<td><span style='color:green'>dist = 86.61</span><br/><span style='color:green'>corr = 0.04081</td><!-- 021 -->
-		<td><span style='color:green'>dist = 112.33</span><br/><span style='color:red'>corr = 0.01559</td><!-- 022 -->
+		<td><strong>dist = 86.61</strong><br/><strong>corr = 0.04081</strong></td><!-- 021 -->
+		<td><strong>dist = 112.33</strong><br/>corr = 0.01559</td><!-- 022 -->
 		<td></td>
-		<td><span style='color:green'>dist = 86.61</span><br/><span style='color:green'>corr = 0.04051</td><!-- 024 -->
-		<td><span style='color:green'>dist = 112.34</span><br/><span style='color:red'>corr = 0.01566</td><!-- 025 -->
+		<td><strong>dist = 86.61</strong><br/><strong>corr = 0.04051</strong></td><!-- 024 -->
+		<td><strong>dist = 112.34</strong><br/>corr = 0.01566</td><!-- 025 -->
 	</tr>
 	<tr> <!-- 03x -->
 		<td><strong>Model 3</strong></td>
-		<td><span style='color:red'>dist = 113.37</span><br/><span style='color:red'>corr = 0.02381</td><!-- 030 -->
-		<td><span style='color:red'>dist = 113.37</span><br/><span style='color:red'>corr = 0.02381</td><!-- 031 -->
-		<td><span style='color:red'>dist = 113.37</span><br/><span style='color:red'>corr = 0.02381</td><!-- 032 -->
-		<td><span style='color:red'>dist = 113.37</span><br/><span style='color:red'>corr = 0.02381</td><!-- 033 -->
-		<td><span style='color:red'>dist = 113.37</span><br/><span style='color:red'>corr = 0.02381</td><!-- 034 -->
-		<td><span style='color:red'>dist = 113.37</span><br/><span style='color:red'>corr = 0.02381</td><!-- 035 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 030 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 031 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 032 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 033 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 034 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 035 -->
 	</tr>
 	<tr> <!-- 04x -->
 		<td><strong>Model 4</strong></td>
-		<td><span style='color:green'>dist = 101.39</span><br/><span style='color:green'>corr = 0.02874</td><!-- 040 -->
-		<td><span style='color:green'>dist = 98.28</span><br/><span style='color:green'>corr = 0.02575</td><!-- 041 -->
-		<td><span style='color:green'>dist = 113.22</span><br/><span style='color:red'>corr = 0.02314</td><!-- 042 -->
-		<td><span style='color:green'>dist = 112.06</span><br/><span style='color:red'>corr = 0.00985</td><!-- 043 -->
-		<td><span style='color:green'>dist = 97.99</span><br/><span style='color:green'>corr = 0.02957</td><!-- 044 -->
-		<td><span style='color:green'>dist = 113.22</span><br/><span style='color:red'>corr = 0.02310</td><!-- 045 -->
+		<td><strong>dist = 101.39</strong><br/><strong>corr = 0.02874</strong></td><!-- 040 -->
+		<td><strong>dist = 98.28</strong><br/><strong>corr = 0.02575</strong></td><!-- 041 -->
+		<td><strong>dist = 113.22</strong><br/>corr = 0.02314</td><!-- 042 -->
+		<td><strong>dist = 112.06</strong><br/>corr = 0.00985</td><!-- 043 -->
+		<td><strong>dist = 97.99</strong><br/><strong>corr = 0.02957</strong></td><!-- 044 -->
+		<td><strong>dist = 113.22</strong><br/>corr = 0.02310</td><!-- 045 -->
 	</tr>
 	<tr> <!-- 05x -->
 		<td><strong>Model 5</strong></td>
-		<td><span style='color:green'>dist = 86.60</span><br/><span style='color:green'>corr = 0.04098</td><!-- 050 -->
-		<td><span style='color:green'>dist = 89.43</span><br/><span style='color:green'>corr = 0.03797</td><!-- 051 -->
-		<td><span style='color:green'>dist = 112.24</span><br/><span style='color:red'>corr = 0.02254</td><!-- 052 -->
-		<td><span style='color:green'>dist = 86.60</span><br/><span style='color:green'>corr = 0.04099</td><!-- 053 -->
-		<td><span style='color:green'>dist = 88.59</span><br/><span style='color:green'>corr = 0.04113</td><!-- 054 -->
-		<td><span style='color:green'>dist = 112.24</span><br/><span style='color:red'>corr = 0.02251</td><!-- 055 -->
+		<td><strong>dist = 86.60</strong><br/><strong>corr = 0.04098</strong></td><!-- 050 -->
+		<td><strong>dist = 89.43</strong><br/><strong>corr = 0.03797</strong></td><!-- 051 -->
+		<td><strong>dist = 112.24</strong><br/>corr = 0.02254</td><!-- 052 -->
+		<td><strong>dist = 86.60</strong><br/><strong>corr = 0.04099</strong></td><!-- 053 -->
+		<td><strong>dist = 88.59</strong><br/><strong>corr = 0.04113</strong></td><!-- 054 -->
+		<td><strong>dist = 112.24</strong><br/>corr = 0.02251</td><!-- 055 -->
 	</tr>
 	<tr> <!-- 06x -->
 		<td><strong>Model 6</strong></td>
@@ -144,48 +144,48 @@ Individual missing values are models that gave `nan` values for some reason; I w
 		<td>0.0001<br/>with decay</td>
 	<tr> <!-- 10x -->
 		<td><strong>Model 0</strong></td>
-		<td><span style='color:red'>dist = 114.05</span><br/><span style='color:red'>corr = 0.00922</td><!-- 100 -->
-		<td><span style='color:red'>dist = 113.82</span><br/><span style='color:red'>corr = 0.01370</td><!-- 101 -->
-		<td><span style='color:red'>dist = 113.49</span><br/><span style='color:red'>corr = 0.01930</td><!-- 102 -->
-		<td><span style='color:red'>dist = 113.44</span><br/><span style='color:red'>corr = 0.01882</td><!-- 103 -->
-		<td><span style='color:red'>dist = 113.82</span><br/><span style='color:red'>corr = 0.01370</td><!-- 104 -->
-		<td><span style='color:red'>dist = 113.47</span><br/><span style='color:red'>corr = 0.01935</td><!-- 105 -->
+		<td>dist = 114.05<br/>corr = 0.00922</td><!-- 100 -->
+		<td>dist = 113.82<br/>corr = 0.01370</td><!-- 101 -->
+		<td>dist = 113.49<br/>corr = 0.01930</td><!-- 102 -->
+		<td>dist = 113.44<br/>corr = 0.01882</td><!-- 103 -->
+		<td>dist = 113.82<br/>corr = 0.01370</td><!-- 104 -->
+		<td>dist = 113.47<br/>corr = 0.01935</td><!-- 105 -->
 	</tr>
 	<tr> <!-- 11x -->
 		<td><strong>Model 1</strong></td>
-		<td><span style='color:green'>dist = 109.26</span><br/><span style='color:red'>corr = 0.00913</td><!-- 110 -->
-		<td><span style='color:green'>dist = 111.65</span><br/><span style='color:red'>corr = 0.02275</td><!-- 111 -->
-		<td><span style='color:green'>dist = 111.60</span><br/><span style='color:red'>corr = 0.01137</td><!-- 112 -->
-		<td><span style='color:green'>dist = 109.19</span><br/><span style='color:red'>corr = 0.00994</td><!-- 113 -->
-		<td><span style='color:green'>dist = 111.70</span><br/><span style='color:green'>corr = 0.02649</td><!-- 114 -->
-		<td><span style='color:green'>dist = 111.61</span><br/><span style='color:red'>corr = 0.01136</td><!-- 115 -->
+		<td><strong>dist = 109.26</strong><br/>corr = 0.00913</td><!-- 110 -->
+		<td><strong>dist = 111.65</strong><br/>corr = 0.02275</td><!-- 111 -->
+		<td><strong>dist = 111.60</strong><br/>corr = 0.01137</td><!-- 112 -->
+		<td><strong>dist = 109.19</strong><br/>corr = 0.00994</td><!-- 113 -->
+		<td><strong>dist = 111.70</strong><br/><strong>corr = 0.02649</strong></td><!-- 114 -->
+		<td><strong>dist = 111.61</strong><br/>corr = 0.01136</td><!-- 115 -->
 	</tr>
 	<tr> <!-- 12x -->
 		<td><strong>Model 2</strong></td>
-		<td><span style='color:green'>dist = 109.49</span><br/><span style='color:red'>corr = 0.00711</td><!-- 120 -->
-		<td><span style='color:green'>dist = 110.73</span><br/><span style='color:red'>corr = 0.02130</td><!-- 121 -->
-		<td><span style='color:green'>dist = 109.24</span><br/><span style='color:red'>corr = 0.00984</td><!-- 122 -->
-		<td><span style='color:green'>dist = 109.32</span><br/><span style='color:red'>corr = 0.00743</td><!-- 123 -->
-		<td><span style='color:green'>dist = 110.73</span><br/><span style='color:red'>corr = 0.02188</td><!-- 124 -->
-		<td><span style='color:green'>dist = 109.26</span><br/><span style='color:red'>corr = 0.00950</td><!-- 125 -->
+		<td><strong>dist = 109.49</strong><br/>corr = 0.00711</td><!-- 120 -->
+		<td><strong>dist = 110.73</strong><br/>corr = 0.02130</td><!-- 121 -->
+		<td><strong>dist = 109.24</strong><br/>corr = 0.00984</td><!-- 122 -->
+		<td><strong>dist = 109.32</strong><br/>corr = 0.00743</td><!-- 123 -->
+		<td><strong>dist = 110.73</strong><br/>corr = 0.02188</td><!-- 124 -->
+		<td><strong>dist = 109.26</strong><br/>corr = 0.00950</td><!-- 125 -->
 	</tr>
 	<tr> <!-- 13x -->
 		<td><strong>Model 3</strong></td>
-		<td><span style='color:red'>dist = 113.37</span><br/><span style='color:red'>corr = 0.02381</td><!-- 130 -->
-		<td><span style='color:red'>dist = 113.37</span><br/><span style='color:red'>corr = 0.02381</td><!-- 131 -->
-		<td><span style='color:green'>dist = 113.35</span><br/><span style='color:red'>corr = 0.02381</td><!-- 132 -->
-		<td><span style='color:red'>dist = 113.37</span><br/><span style='color:red'>corr = 0.02381</td><!-- 133 -->
-		<td><span style='color:red'>dist = 113.37</span><br/><span style='color:red'>corr = 0.02381</td><!-- 134 -->
-		<td><span style='color:green'>dist = 113.35</span><br/><span style='color:red'>corr = 0.02381</td><!-- 135 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 130 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 131 -->
+		<td><strong>dist = 113.35</strong><br/>corr = 0.02381</td><!-- 132 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 133 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 134 -->
+		<td><strong>dist = 113.35</strong><br/>corr = 0.02381</td><!-- 135 -->
 	</tr>
 	<tr> <!-- 14x -->
 		<td><strong>Model 4</strong></td>
-		<td><span style='color:green'>dist = 109.83</span><br/><span style='color:red'>corr = 0.01019</td><!-- 140 -->
-		<td><span style='color:green'>dist = 111.56</span><br/><span style='color:red'>corr = 0.02239</td><!-- 141 -->
-		<td><span style='color:green'>dist = 111.43</span><br/><span style='color:red'>corr = 0.01767</td><!-- 142 -->
-		<td><span style='color:green'>dist = 109.70</span><br/><span style='color:red'>corr = 0.00911</td><!-- 143 -->
-		<td><span style='color:green'>dist = 111.69</span><br/><span style='color:green'>corr = 0.02511</td><!-- 144 -->
-		<td><span style='color:green'>dist = 111.42</span><br/><span style='color:red'>corr = 0.01778</td><!-- 145 -->
+		<td><strong>dist = 109.83</strong><br/>corr = 0.01019</td><!-- 140 -->
+		<td><strong>dist = 111.56</strong><br/>corr = 0.02239</td><!-- 141 -->
+		<td><strong>dist = 111.43</strong><br/>corr = 0.01767</td><!-- 142 -->
+		<td><strong>dist = 109.70</strong><br/>corr = 0.00911</td><!-- 143 -->
+		<td><strong>dist = 111.69</strong><br/><strong>corr = 0.02511</strong></td><!-- 144 -->
+		<td><strong>dist = 111.42</strong><br/>corr = 0.01778</td><!-- 145 -->
 	</tr>
 	<tr> <!-- 15x -->
 		<td><strong>Model 5</strong></td>
@@ -233,39 +233,39 @@ Individual missing values are models that gave `nan` values for some reason; I w
 		<td>0.0001<br/>with decay</td>
 	<tr> <!-- 20x -->
 		<td><strong>Model 0</strong></td>
-		<td><span style='color:red'>dist = 114.13</span><br/><span style='color:red'>corr = 0.00569</td><!-- 200 -->
-		<td><span style='color:red'>dist = 114.02</span><br/><span style='color:red'>corr = 0.00765</td><!-- 201 -->
-		<td><span style='color:red'>dist = 113.61</span><br/><span style='color:red'>corr = 0.01460</td><!-- 202 -->
-		<td><span style='color:red'>dist = 114.11</span><br/><span style='color:red'>corr = 0.00601</td><!-- 203 -->
-		<td><span style='color:red'>dist = 114.02</span><br/><span style='color:red'>corr = 0.00765</td><!-- 204 -->
-		<td><span style='color:red'>dist = 113.61</span><br/><span style='color:red'>corr = 0.01463</td><!-- 205 -->
+		<td>dist = 114.13<br/>corr = 0.00569</td><!-- 200 -->
+		<td>dist = 114.02<br/>corr = 0.00765</td><!-- 201 -->
+		<td>dist = 113.61<br/>corr = 0.01460</td><!-- 202 -->
+		<td>dist = 114.11<br/>corr = 0.00601</td><!-- 203 -->
+		<td>dist = 114.02<br/>corr = 0.00765</td><!-- 204 -->
+		<td>dist = 113.61<br/>corr = 0.01463</td><!-- 205 -->
 	</tr>
 	<tr> <!-- 21x -->
 		<td><strong>Model 1</strong></td>
 		<td></td>
-		<td><span style='color:green'>dist = 111.76</span><br/><span style='color:red'>corr = 0.00493</td><!-- 211 -->
-		<td><span style='color:green'>dist = 108.68</span><br/><span style='color:red'>corr = 0.00536</td><!-- 212 -->
+		<td><strong>dist = 111.76</strong><br/>corr = 0.00493</td><!-- 211 -->
+		<td><strong>dist = 108.68</strong><br/>corr = 0.00536</td><!-- 212 -->
 		<td></td>
-		<td><span style='color:green'>dist = 111.76</span><br/><span style='color:red'>corr = 0.00493</td><!-- 214 -->
-		<td><span style='color:green'>dist = 108.68</span><br/><span style='color:red'>corr = 0.00537</td><!-- 215 -->
+		<td><strong>dist = 111.76</strong><br/>corr = 0.00493</td><!-- 214 -->
+		<td><strong>dist = 108.68</strong><br/>corr = 0.00537</td><!-- 215 -->
 	</tr>
 	<tr> <!-- 22x -->
 		<td><strong>Model 2</strong></td>
 		<td></td>
 		<td></td>
-		<td><span style='color:green'>dist = 112.84</span><br/><span style='color:red'>corr = 0.00451</td><!-- 222 -->
+		<td><strong>dist = 112.84</strong><br/>corr = 0.00451</td><!-- 222 -->
 		<td></td>
 		<td></td>
-		<td><span style='color:green'>dist = 112.90</span><br/><span style='color:red'>corr = 0.00451</td><!-- 225 -->
+		<td><strong>dist = 112.90</strong><br/>corr = 0.00451</td><!-- 225 -->
 	</tr>
 	<tr> <!-- 23x -->
 		<td><strong>Model 3</strong></td>
-		<td><span style='color:red'>dist = 113.37</span><br/><span style='color:red'>corr = 0.02381</td><!-- 230 -->
-		<td><span style='color:red'>dist = 113.37</span><br/><span style='color:red'>corr = 0.02381</td><!-- 231 -->
-		<td><span style='color:red'>dist = 113.37</span><br/><span style='color:red'>corr = 0.02381</td><!-- 232 -->
-		<td><span style='color:red'>dist = 113.37</span><br/><span style='color:red'>corr = 0.02381</td><!-- 233 -->
-		<td><span style='color:red'>dist = 113.37</span><br/><span style='color:red'>corr = 0.02381</td><!-- 234 -->
-		<td><span style='color:red'>dist = 113.37</span><br/><span style='color:red'>corr = 0.02381</td><!-- 235 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 230 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 231 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 232 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 233 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 234 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 235 -->
 	</tr>
 	<tr> <!-- 24x -->
 		<td><strong>Model 4</strong></td>

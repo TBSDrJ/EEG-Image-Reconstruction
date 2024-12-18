@@ -3,6 +3,10 @@
 This fork provides:
 1. A branch 'mps' that converts code from CUDA GPU acceleration to MPS/Apple Silicon GPU acceleration.  In its current state, this is complete for all of the EEG scripts in the instructions below, but I have not looked at the MEG at all.
 
+2. Extensive comparison of models to predict VDVAE latents from EEG readings.  See folder `ridge_comparisons`.
+
+3. Code to make a copy of all of the data with specific pairs of EEG sensors switched left &#x2194; right.  See program `swap_electrodes.py`.
+
 # Visual Reconstruction with Latent Diffusion through Linear Mapping
 Check out the preprint: [Image Reconstruction from Electroencephalography Using Latent Diffusion](https://arxiv.org/abs/2404.01250)
 ![reconstructions](results/thingseeg2_preproc/sub-01/diffusion_recon_plot_ordered_by_performance.png)
