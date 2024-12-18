@@ -7,10 +7,10 @@ We test many variations of other models that could be used in place of the Ridge
 In all examples, training stops when 10 consecutive epochs fail to yield an improvement in distance and correlation over prior epochs (measured by adding % change in distance to % change in correlation).
 
 The comparisons are all numbered using a 3-digit code:
-- The first digit is the loss function:
+- The first digit is the loss function.  We used &#x0b31; = 1 for &#x2113;<sup>1</sup> because it yielded the best results across 10<sup>-4</sup>, 10<sup>-3.75</sup>, ... 10<sup>4</sup> using Model #1.  We used &#x0b31; = 1000 for &#x2113;<sup>2</sup> because that is what worked best for Ridge regression in similar tests.:
     - 0: Just MSELoss.
-    - 1: MSELoss + &#x2113;<sup>1</sup> size of the weights
-    - 2: MSELoss + &#x2113;<sup>2</sup> size of the weights
+    - 1: MSELoss + &#x2113;<sup>1</sup> size of the weights * &#x0b31;, &#x0b31; = 1
+    - 2: MSELoss + &#x2113;<sup>2</sup> size of the weights * &#x0b31;, &#x0b31; = 1000
 - The second digit is the model:
     - 0: Single Linear layer of size 680 &#x00d7; 91168
     - 1: Two Linear layers, first 680 &#x00d7; 680, second 680 &#x00d7; 91168, with ReLU between.
@@ -260,12 +260,12 @@ Individual missing values are models that gave `nan` values for some reason; I w
 	</tr>
 	<tr> <!-- 23x -->
 		<td><strong>Model 3</strong></td>
-		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 230 -->
-		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 231 -->
-		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 232 -->
-		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 233 -->
-		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 234 -->
-		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 235 -->
+		<td></td><!-- 230 -->
+		<td></td><!-- 231 -->
+		<td></td><!-- 232 -->
+		<td></td><!-- 233 -->
+		<td></td><!-- 234 -->
+		<td></td><!-- 235 -->
 	</tr>
 	<tr> <!-- 24x -->
 		<td><strong>Model 4</strong></td>
