@@ -189,12 +189,12 @@ Individual missing values are models that gave `nan` values for some reason; I w
 	</tr>
 	<tr> <!-- 15x -->
 		<td><strong>Model 5</strong></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
+		<td><strong>dist = 107.82</strong><br/>corr = 0.00550</td><!-- 150 -->
+		<td><strong>dist = 109.46</strong><br/>corr = 0.01981</td><!-- 151 -->
+		<td><strong>dist = 110.78</strong><br/>corr = 0.01404</td><!-- 152 -->
+		<td><strong>dist = 106.47</strong><br/>corr = 0.00520</td><!-- 153 -->
+		<td><strong>dist = 109.46</strong><br/>corr = 0.01997</td><!-- 154 -->
+		<td><strong>dist = 110.78</strong><br/>corr = 0.01409</td><!-- 155 -->
 	</tr>
 	<tr> <!-- 16x -->
 		<td><strong>Model 6</strong></td>
@@ -260,21 +260,21 @@ Individual missing values are models that gave `nan` values for some reason; I w
 	</tr>
 	<tr> <!-- 23x -->
 		<td><strong>Model 3</strong></td>
-		<td></td><!-- 230 -->
-		<td></td><!-- 231 -->
-		<td></td><!-- 232 -->
-		<td></td><!-- 233 -->
-		<td></td><!-- 234 -->
-		<td></td><!-- 235 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 230 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 231 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 232 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 233 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 234 -->
+		<td>dist = 113.37<br/>corr = 0.02381</td><!-- 235 -->
 	</tr>
 	<tr> <!-- 24x -->
 		<td><strong>Model 4</strong></td>
 		<td></td>
+		<td><strong>dist = 110.37</strong><br/>corr = 0.00599</td><!-- 241 -->
+		<td><strong>dist = 110.29</strong><br/>corr = 0.00905</td><!-- 242 -->
 		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
+		<td><strong>dist = 110.85</strong><br/>corr = 0.00599</td><!-- 244 -->
+		<td><strong>dist = 110.29</strong><br/>corr = 0.00908</td><!-- 245 -->
 	</tr>
 	<tr> <!-- 25x -->
 		<td><strong>Model 5</strong></td>

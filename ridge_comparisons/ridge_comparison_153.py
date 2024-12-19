@@ -46,6 +46,8 @@ def preprocess_eeg_data(eeg_train: np.ndarray, eeg_test: np.ndarray
     norm_scale_train = np.std(eeg_train, axis=0, ddof=1)
     eeg_train = (eeg_train - norm_mean_train) / norm_scale_train
     eeg_test = (eeg_test - norm_mean_train) / norm_scale_train
+    eeg_train_cnn = eeg_train.copy()
+    eeg_test_cnn = eeg_test.copy()
     # Flatten EEG channels and time dim into one dimension
     eeg_train = eeg_train.reshape(eeg_train.shape[0],-1)
     eeg_test = eeg_test.reshape(eeg_test.shape[0],-1)
@@ -113,15 +115,6 @@ def train_model(
     correlations = []
     improvements = []
     epoch = 1
-    avg_euclidean_distance, avg_correlation = evaluate(
-            eeg_test, train_latents, test_latents, model)
-    distances.append(avg_euclidean_distance)
-    correlations.append(avg_correlation)
-    print(f"Evaluate model before start: {avg_euclidean_distance=:.2f}, " +
-            f"{avg_correlation=:.6f}")
-    with open(filename, "a") as f:
-        print (f"Evaluate model before start: {avg_euclidean_distance=:.2f}, " + 
-                f"{avg_correlation=:.6f}\n", file=f)
     while not stopping:
         batch_losses = []
         batch = 0
@@ -149,6 +142,7 @@ def train_model(
         # If metric does not improve over prior minimum for 10 epochs, stop.
         avg_euclidean_distance, avg_correlation = evaluate(
                 eeg_test, train_latents, test_latents, model)
+        output_str += f"{avg_euclidean_distance=:.2f}, {avg_correlation=:.8f}\n"
         if epoch > 1:
             improvement = ((min(distances) - avg_euclidean_distance)
                     /min(distances))
@@ -238,13 +232,20 @@ class MyLoss(torch.nn.Module):
         super().__init__(*args, **kwargs)
     
     def forward(self, preds: torch.Tensor, targets: torch.Tensor, 
-            model: torch.nn.Module, α=1000, β=1) -> torch.Tensor:
+            model: torch.nn.Module, α=1, β=1) -> torch.Tensor:
         loss_0 = torch.nn.MSELoss(reduction="sum")(preds, targets)
-        wgts_0 = model.get_parameter('linear_ridge.weight')
-        bias_0 = model.get_parameter('linear_ridge.bias')
-        loss_1 = wgts_0.square().sum() + bias_0.square().sum()
+        wgts_0 = model.get_parameter('linear_0.weight')
+        bias_0 = model.get_parameter('linear_0.bias')
+        loss_1 = wgts_0.abs().sum() + bias_0.abs().sum()
+        wgts_1 = model.get_parameter('linear_1.weight')
+        bias_1 = model.get_parameter('linear_1.bias')
+        loss_1 += wgts_1.abs().sum() + bias_1.abs().sum()
+        wgts_2 = model.get_parameter('linear_ridge.weight')
+        bias_2 = model.get_parameter('linear_ridge.bias')
+        loss_1 += wgts_2.abs().sum() + bias_2.abs().sum()
         loss_2 = 0
         return loss_0 + α*loss_1 + β*loss_2
+
 
 class MyModel(torch.nn.Module):
     """The actual model that we will train which will vary version to version"""
@@ -252,10 +253,17 @@ class MyModel(torch.nn.Module):
         super().__init__(*args, **kwargs)
         # Using 17 sensors on the EEG headset
         input_size = 17 * duration
+        self.linear_0 = torch.nn.Linear(input_size, input_size)
+        self.linear_1 = torch.nn.Linear(input_size, input_size)
+        self.relu = torch.nn.ReLU()
         self.linear_ridge = torch.nn.Linear(input_size, 91168)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        outputs = self.linear_ridge(x)
+        outputs = self.linear_0(x)
+        outputs = self.relu(outputs)
+        outputs = self.linear_1(outputs)
+        outputs = self.relu(outputs)
+        outputs = self.linear_ridge(outputs)
         return outputs
 
 def main():
@@ -278,13 +286,11 @@ def main():
             batch_size=64, drop_last=True)
     model = MyModel(duration = DURATION)
     model = prefill_model_coeffs(model, eeg_train, eeg_test, train_latents, test_latents)
-    avg_euclidean_distance, avg_correlation = evaluate(
-            eeg_test, train_latents, test_latents, model)
-    print(f"{avg_euclidean_distance=:.2f}, {avg_correlation=:.6f}")
     model.train()
-    lr = 0.0001
+    lr = 0.01
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-    lr_sch = None
+    lr_sch = torch.optim.lr_scheduler.MultiplicativeLR(optimizer, 
+            lambda epoch: 0.99)
     loss = MyLoss()
     print(f"{model=}")
     print("Training VDVAE Regression")

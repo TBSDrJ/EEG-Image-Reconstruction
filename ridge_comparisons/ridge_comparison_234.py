@@ -238,7 +238,7 @@ class MyLoss(torch.nn.Module):
         super().__init__(*args, **kwargs)
     
     def forward(self, preds: torch.Tensor, targets: torch.Tensor, 
-            model: torch.nn.Module, α=1, β=1) -> torch.Tensor:
+            model: torch.nn.Module, α=1000, β=1) -> torch.Tensor:
         loss_0 = torch.nn.MSELoss(reduction="sum")(preds, targets)
         wgts_0 = model.get_parameter('linear_ridge.weight')
         bias_0 = model.get_parameter('linear_ridge.bias')
