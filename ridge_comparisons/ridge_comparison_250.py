@@ -15,7 +15,6 @@ from scipy.spatial.distance import correlation
 import torch
 import sklearn.linear_model
 
-
 # Constants for use in filenames so that they all match.
 VERSION = __file__.split(".")[0].split("_")[-1]
 TIME_STAMP = time.strftime('%Y_%m_%d_%H_%M')
@@ -92,10 +91,9 @@ def prefill_model_coeffs(
     print(f"Linear layer coeffs: {model.linear_ridge.weight.shape}")
     model.linear_ridge.weight = wgt_param
     model.linear_ridge.bias = bias_param
-    avg_euclidean_distance, avg_correlation, nans = evaluate(
+    avg_euclidean_distance, avg_correlation = evaluate(
             eeg_test, train_latents, test_latents, reg)
-    print(f"Evaluate Ridge: {avg_euclidean_distance=:.2f}, " + 
-            f"{avg_correlation=:.6f}")
+    print(f"Evaluate Ridge: {avg_euclidean_distance=:.2f}, {avg_correlation=:.6f}")
     return model
 
 def train_model(
@@ -142,10 +140,10 @@ def train_model(
         print(f"\nEpoch avg. loss: {epoch_losses[-1]:.2f}")
         output_str += f"Epoch avg. loss: {epoch_losses[-1]:.2f}\n"
         # If metric does not improve over prior minimum for 10 epochs, stop.
-        avg_euclidean_distance, avg_correlation, nans = evaluate(
+        avg_euclidean_distance, avg_correlation = evaluate(
                 eeg_test, train_latents, test_latents, model)
         output_str += f"{avg_euclidean_distance=:.2f}, {avg_correlation=:.8f}\n"
-        if epoch > 1 and len(distances) > 0:
+        if epoch > 1:
             improvement = ((min(distances) - avg_euclidean_distance)
                     /min(distances))
             improvement += ((avg_correlation - max(correlations))
@@ -154,19 +152,14 @@ def train_model(
             print(f"% Improvement over best so far: {improvement * 100:.4f}")
             output_str += ("% Improvement over best so far: " + 
                     f"{improvement * 100:.4f}\n")
-        if sum(np.isnan((avg_euclidean_distance, avg_correlation))) == 0:
-            distances.append(avg_euclidean_distance)
-            correlations.append(avg_correlation)
-        else:
-            print(f"Found {nans} nan values in calculating the norm.")
-            output_str += f"Found {nans} nan values in calculating the norm.\n"
+        distances.append(avg_euclidean_distance)
+        correlations.append(avg_correlation)
         print(f"{avg_euclidean_distance=:.2f}, {avg_correlation=:.6f}")
         output_str += f"{avg_euclidean_distance=:.2f}, {avg_correlation=:.6f}\n"
-        if len(distances) > 0:
-            print(f"Min dist so far: {min(distances):.2f}, Max corr so far: " + 
-                    f"{max(correlations):.8f}")
-            output_str += (f"Min dist so far: {min(distances):.2f}, Max corr " + 
-                    f"so far: {max(correlations):.8f}\n")
+        print(f"Min dist so far: {min(distances):.2f}, Max corr so far: " + 
+                f"{max(correlations):.8f}")
+        output_str += (f"Min dist so far: {min(distances):.2f}, Max corr " + 
+                f"so far: {max(correlations):.8f}\n")
         if epoch < 11: 
             stopping = False
             print("Epoch count less than 11, continue training.")
@@ -184,10 +177,10 @@ def train_model(
                         "10 epochs, continue training.")
                 output_str += (f"Improved in {test} of " + 
                         "the last 10 epochs, continue training.\n")
-        if avg_euclidean_distance < 113.3732 or avg_correlation > 0.023811:
-            with open(f"ridge_comparisons/saves/models/save_model_{VERSION}_" + 
-                    f"{TIME_STAMP}_epoch_{epoch}.dat", "wb") as f:
-                pickle.dump(model, f)
+        # if avg_euclidean_distance < 113.3732 or avg_correlation > 0.023811:
+        #     with open(f"ridge_comparisons/saves/models/save_model_{VERSION}_" + 
+        #             f"{TIME_STAMP}_epoch_{epoch}.dat", "wb") as f:
+        #         pickle.dump(model, f)
         print(f"Time: {int(time.perf_counter() - start)} secs\n")
         output_str += f"Time: {int(time.perf_counter() - start)} secs\n"
         with open(filename, "a") as f:
@@ -208,7 +201,6 @@ def evaluate(eeg_test: np.ndarray, train_latents: np.ndarray,
     pred_latent_mean = np.mean(pred_latent,axis=0)
     pred_latent_std = np.std(pred_latent,axis=0)
     std_norm_pred_latent = (pred_latent - pred_latent_mean) / pred_latent_std
-    nans = np.isnan(std_norm_pred_latent).sum()
     train_latents_mean = np.mean(train_latents,axis=0)
     train_latents_std = np.std(train_latents,axis=0)
     pred_latents = std_norm_pred_latent * train_latents_std + train_latents_mean
@@ -218,7 +210,7 @@ def evaluate(eeg_test: np.ndarray, train_latents: np.ndarray,
             for u, v in zip(pred_latents, test_latents)])
     average_euclidean_distance = euclidean_distances.mean()
     correlations = (1 - correlation_distances).mean()
-    return average_euclidean_distance, correlations, nans
+    return average_euclidean_distance, correlations
 
 class MyZipDataset(torch.utils.data.Dataset):
     """Build Torch Dataset from the loaded EEG data"""
@@ -245,11 +237,15 @@ class MyLoss(torch.nn.Module):
         wgts_0 = model.get_parameter('linear_0.weight')
         bias_0 = model.get_parameter('linear_0.bias')
         loss_1 = wgts_0.square().sum() + bias_0.square().sum()
-        wgts_1 = model.get_parameter('linear_ridge.weight')
-        bias_1 = model.get_parameter('linear_ridge.bias')
+        wgts_1 = model.get_parameter('linear_1.weight')
+        bias_1 = model.get_parameter('linear_1.bias')
         loss_1 += wgts_1.square().sum() + bias_1.square().sum()
+        wgts_2 = model.get_parameter('linear_ridge.weight')
+        bias_2 = model.get_parameter('linear_ridge.bias')
+        loss_1 += wgts_2.square().sum() + bias_2.square().sum()
         loss_2 = 0
         return loss_0 + α*loss_1 + β*loss_2
+
 
 class MyModel(torch.nn.Module):
     """The actual model that we will train which will vary version to version"""
@@ -258,11 +254,14 @@ class MyModel(torch.nn.Module):
         # Using 17 sensors on the EEG headset
         input_size = 17 * duration
         self.linear_0 = torch.nn.Linear(input_size, input_size)
+        self.linear_1 = torch.nn.Linear(input_size, input_size)
         self.relu = torch.nn.ReLU()
         self.linear_ridge = torch.nn.Linear(input_size, 91168)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         outputs = self.linear_0(x)
+        outputs = self.relu(outputs)
+        outputs = self.linear_1(outputs)
         outputs = self.relu(outputs)
         outputs = self.linear_ridge(outputs)
         return outputs
@@ -290,8 +289,7 @@ def main():
     model.train()
     lr = 0.01
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-    lr_sch = torch.optim.lr_scheduler.MultiplicativeLR(optimizer, 
-            lambda epoch: 0.99)
+    lr_sch = None
     loss = MyLoss()
     print(f"{model=}")
     print("Training VDVAE Regression")

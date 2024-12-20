@@ -92,7 +92,7 @@ def prefill_model_coeffs(
     print(f"Linear layer coeffs: {model.linear_ridge.weight.shape}")
     model.linear_ridge.weight = wgt_param
     model.linear_ridge.bias = bias_param
-    avg_euclidean_distance, avg_correlation = evaluate(
+    avg_euclidean_distance, avg_correlation, nans = evaluate(
             eeg_test, train_latents, test_latents, reg)
     print(f"Evaluate Ridge: {avg_euclidean_distance=}, {avg_correlation=}")
     return model
@@ -141,10 +141,10 @@ def train_model(
         print(f"\nEpoch avg. loss: {epoch_losses[-1]:.2f}")
         output_str += f"Epoch avg. loss: {epoch_losses[-1]:.2f}\n"
         # If metric does not improve over prior minimum for 10 epochs, stop.
-        avg_euclidean_distance, avg_correlation = evaluate(
+        avg_euclidean_distance, avg_correlation, nans = evaluate(
                 eeg_test, train_latents, test_latents, model)
         output_str += f"{avg_euclidean_distance=:.2f}, {avg_correlation=:.8f}\n"
-        if epoch > 1:
+        if epoch > 1 and len(distances) > 0:
             improvement = ((min(distances) - avg_euclidean_distance)
                     /min(distances))
             improvement += ((avg_correlation - max(correlations))
@@ -153,14 +153,19 @@ def train_model(
             print(f"% Improvement over best so far: {improvement * 100:.4f}")
             output_str += ("% Improvement over best so far: " + 
                     f"{improvement * 100:.4f}\n")
-        distances.append(avg_euclidean_distance)
-        correlations.append(avg_correlation)
+        if sum(np.isnan((avg_euclidean_distance, avg_correlation))) == 0:
+            distances.append(avg_euclidean_distance)
+            correlations.append(avg_correlation)
+        else:
+            print(f"Found {nans} nan values in calculating the norm.")
+            output_str += f"Found {nans} nan values in calculating the norm.\n"
         print(f"{avg_euclidean_distance=:.2f}, {avg_correlation=:.6f}")
         output_str += f"{avg_euclidean_distance=:.2f}, {avg_correlation=:.6f}\n"
-        print(f"Min dist so far: {min(distances):.2f}, Max corr so far: " + 
-                f"{max(correlations):.8f}")
-        output_str += (f"Min dist so far: {min(distances):.2f}, Max corr " + 
-                f"so far: {max(correlations):.8f}\n")
+        if len(distances) > 0:
+            print(f"Min dist so far: {min(distances):.2f}, Max corr so far: " + 
+                    f"{max(correlations):.8f}")
+            output_str += (f"Min dist so far: {min(distances):.2f}, Max corr " + 
+                    f"so far: {max(correlations):.8f}\n")
         if epoch < 11: 
             stopping = False
             print("Epoch count less than 11, continue training.")
@@ -202,6 +207,7 @@ def evaluate(eeg_test: np.ndarray, train_latents: np.ndarray,
     pred_latent_mean = np.mean(pred_latent,axis=0)
     pred_latent_std = np.std(pred_latent,axis=0)
     std_norm_pred_latent = (pred_latent - pred_latent_mean) / pred_latent_std
+    nans = np.isnan(std_norm_pred_latent).sum()
     train_latents_mean = np.mean(train_latents,axis=0)
     train_latents_std = np.std(train_latents,axis=0)
     pred_latents = std_norm_pred_latent * train_latents_std + train_latents_mean
@@ -211,7 +217,7 @@ def evaluate(eeg_test: np.ndarray, train_latents: np.ndarray,
             for u, v in zip(pred_latents, test_latents)])
     average_euclidean_distance = euclidean_distances.mean()
     correlations = (1 - correlation_distances).mean()
-    return average_euclidean_distance, correlations
+    return average_euclidean_distance, correlations, nans
 
 class MyZipDataset(torch.utils.data.Dataset):
     """Build Torch Dataset from the loaded EEG data"""

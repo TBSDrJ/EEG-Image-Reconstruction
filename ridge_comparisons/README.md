@@ -36,7 +36,7 @@ The comparisons are all numbered using a 3-digit code:
 
 Values below in bold are better than Ridge, others are not better.
 
-Individual missing values are models that gave `nan` values for some reason; I will try to re-run these on CUDA to see if it is an MPS-specific problem (or maybe MacOS 13-specific problem). Entire missing rows are for code I haven't built/run yet.
+Values that show `nan` had `nan` values in calculating the standard norm of the predicted latents through all of the first 11 epochs.
 
 ### Loss 0 (MSE only)
 
@@ -73,10 +73,10 @@ Individual missing values are models that gave `nan` values for some reason; I w
 	</tr>
 	<tr> <!-- 02x -->
 		<td><strong>Model 2</strong></td>
-		<td></td>
+		<td>dist = nan<br/>corr = nan</td><!-- 020 -->
 		<td><strong>dist = 86.61</strong><br/><strong>corr = 0.04081</strong></td><!-- 021 -->
 		<td><strong>dist = 112.33</strong><br/>corr = 0.01559</td><!-- 022 -->
-		<td></td>
+		<td>dist = nan<br/>corr = nan</td><!-- 023 -->
 		<td><strong>dist = 86.61</strong><br/><strong>corr = 0.04051</strong></td><!-- 024 -->
 		<td><strong>dist = 112.34</strong><br/>corr = 0.01566</td><!-- 025 -->
 	</tr>
@@ -109,21 +109,21 @@ Individual missing values are models that gave `nan` values for some reason; I w
 	</tr>
 	<tr> <!-- 06x -->
 		<td><strong>Model 6</strong></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
+		<td><strong>dist = 86.59</strong><br/><strong>corr = 0.04104</strong></td><!-- 060 -->
+		<td><strong>dist = 112.94</strong><br/><strong>corr = 0.02393</strong></td><!-- 061 -->
+		<td><strong>dist = 112.94</strong><br/><strong>corr = 0.02653</strong></td><!-- 062 -->
+		<td><strong>dist = 86.59</strong><br/><strong>corr = 0.04245</strong></td><!-- 063 -->
+		<td><strong>dist = 112.94</strong><br/><strong>corr = 0.02399</strong></td><!-- 064 -->
+		<td><strong>dist = 112.94</strong><br/><strong>corr = 0.02654</strong></td><!-- 065 -->
 	</tr>
 	<tr> <!-- 07x -->
 		<td><strong>Model 7</strong></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
+		<td><strong>dist = 86.62</strong><br/><strong>corr = 0.04089</strong></td><!-- 070 -->
+		<td><strong>dist = 110.33</strong><br/>corr = 0.02107</td><!-- 071 -->
+		<td><strong>dist = 112.41</strong><br/><strong>corr = 0.02598</strong></td><!-- 072 -->
+		<td><strong>dist = 86.61</strong><br/><strong>corr = 0.04126</strong></td><!-- 073 -->
+		<td><strong>dist = 110.36</strong><br/>corr = 0.02192</td><!-- 074 -->
+		<td><strong>dist = 112.40</strong><br/><strong>corr = 0.02601</strong></td><!-- 075 -->
 	</tr>
 </table>
 
@@ -242,20 +242,20 @@ Individual missing values are models that gave `nan` values for some reason; I w
 	</tr>
 	<tr> <!-- 21x -->
 		<td><strong>Model 1</strong></td>
-		<td></td>
+		<td><strong>dist = 87.37</strong><br/><strong>corr = 0.03838</strong></td><!-- 210 -->
 		<td><strong>dist = 111.76</strong><br/>corr = 0.00493</td><!-- 211 -->
 		<td><strong>dist = 108.68</strong><br/>corr = 0.00536</td><!-- 212 -->
-		<td></td>
+		<td><strong>dist = 105.91</strong><br/>corr = 0.00595</td><!-- 213 -->
 		<td><strong>dist = 111.76</strong><br/>corr = 0.00493</td><!-- 214 -->
 		<td><strong>dist = 108.68</strong><br/>corr = 0.00537</td><!-- 215 -->
 	</tr>
 	<tr> <!-- 22x -->
 		<td><strong>Model 2</strong></td>
-		<td></td>
-		<td></td>
+		<td><strong>dist = 93.65</strong><br/>corr = 0.01481</td><!-- 220 -->
+		<td>dist = nan<br/>corr = nan</td><!-- 221 -->
 		<td><strong>dist = 112.84</strong><br/>corr = 0.00451</td><!-- 222 -->
-		<td></td>
-		<td></td>
+		<td><strong>dist = 88.32</strong><br/>corr = 0.02257</td><!-- 223 -->
+		<td>dist = nan<br/>corr = nan</td><!-- 224 -->
 		<td><strong>dist = 112.90</strong><br/>corr = 0.00451</td><!-- 225 -->
 	</tr>
 	<tr> <!-- 23x -->
@@ -269,21 +269,21 @@ Individual missing values are models that gave `nan` values for some reason; I w
 	</tr>
 	<tr> <!-- 24x -->
 		<td><strong>Model 4</strong></td>
-		<td></td>
+		<td><strong>dist = 108.02</strong><br/>corr = 0.00728</td><!-- 240 -->
 		<td><strong>dist = 110.37</strong><br/>corr = 0.00599</td><!-- 241 -->
 		<td><strong>dist = 110.29</strong><br/>corr = 0.00905</td><!-- 242 -->
-		<td></td>
+		<td><strong>dist = 105.17</strong><br/>corr = 0.00694</td><!-- 243 -->
 		<td><strong>dist = 110.85</strong><br/>corr = 0.00599</td><!-- 244 -->
 		<td><strong>dist = 110.29</strong><br/>corr = 0.00908</td><!-- 245 -->
 	</tr>
 	<tr> <!-- 25x -->
 		<td><strong>Model 5</strong></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
+		<td>dist = nan<br/>corr = nan</td><!-- 250 -->
+		<td>dist = nan<br/>corr = nan</td><!-- 251 -->
+		<td>dist = 114.12<br/>corr = 0.00437</td><!-- 252 -->
+		<td><strong>dist = 103.66</strong><br/>corr = 0.00885</td><!-- 253 -->
+		<td>dist = nan<br/>corr = nan</td><!-- 254 -->
+		<td>dist = 114.12<br/>corr = 0.00456</td><!-- 255 -->
 	</tr>
 	<tr> <!-- 26x -->
 		<td><strong>Model 6</strong></td>

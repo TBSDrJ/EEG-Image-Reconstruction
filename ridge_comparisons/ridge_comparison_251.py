@@ -15,7 +15,6 @@ from scipy.spatial.distance import correlation
 import torch
 import sklearn.linear_model
 
-
 # Constants for use in filenames so that they all match.
 VERSION = __file__.split(".")[0].split("_")[-1]
 TIME_STAMP = time.strftime('%Y_%m_%d_%H_%M')
@@ -184,10 +183,10 @@ def train_model(
                         "10 epochs, continue training.")
                 output_str += (f"Improved in {test} of " + 
                         "the last 10 epochs, continue training.\n")
-        if avg_euclidean_distance < 113.3732 or avg_correlation > 0.023811:
-            with open(f"ridge_comparisons/saves/models/save_model_{VERSION}_" + 
-                    f"{TIME_STAMP}_epoch_{epoch}.dat", "wb") as f:
-                pickle.dump(model, f)
+        # if avg_euclidean_distance < 113.3732 or avg_correlation > 0.023811:
+        #     with open(f"ridge_comparisons/saves/models/save_model_{VERSION}_" + 
+        #             f"{TIME_STAMP}_epoch_{epoch}.dat", "wb") as f:
+        #         pickle.dump(model, f)
         print(f"Time: {int(time.perf_counter() - start)} secs\n")
         output_str += f"Time: {int(time.perf_counter() - start)} secs\n"
         with open(filename, "a") as f:
@@ -245,11 +244,15 @@ class MyLoss(torch.nn.Module):
         wgts_0 = model.get_parameter('linear_0.weight')
         bias_0 = model.get_parameter('linear_0.bias')
         loss_1 = wgts_0.square().sum() + bias_0.square().sum()
-        wgts_1 = model.get_parameter('linear_ridge.weight')
-        bias_1 = model.get_parameter('linear_ridge.bias')
+        wgts_1 = model.get_parameter('linear_1.weight')
+        bias_1 = model.get_parameter('linear_1.bias')
         loss_1 += wgts_1.square().sum() + bias_1.square().sum()
+        wgts_2 = model.get_parameter('linear_ridge.weight')
+        bias_2 = model.get_parameter('linear_ridge.bias')
+        loss_1 += wgts_2.square().sum() + bias_2.square().sum()
         loss_2 = 0
         return loss_0 + α*loss_1 + β*loss_2
+
 
 class MyModel(torch.nn.Module):
     """The actual model that we will train which will vary version to version"""
@@ -258,11 +261,14 @@ class MyModel(torch.nn.Module):
         # Using 17 sensors on the EEG headset
         input_size = 17 * duration
         self.linear_0 = torch.nn.Linear(input_size, input_size)
+        self.linear_1 = torch.nn.Linear(input_size, input_size)
         self.relu = torch.nn.ReLU()
         self.linear_ridge = torch.nn.Linear(input_size, 91168)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         outputs = self.linear_0(x)
+        outputs = self.relu(outputs)
+        outputs = self.linear_1(outputs)
         outputs = self.relu(outputs)
         outputs = self.linear_ridge(outputs)
         return outputs
@@ -288,10 +294,9 @@ def main():
     model = MyModel(duration = DURATION)
     model = prefill_model_coeffs(model, eeg_train, eeg_test, train_latents, test_latents)
     model.train()
-    lr = 0.01
+    lr = 0.001
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-    lr_sch = torch.optim.lr_scheduler.MultiplicativeLR(optimizer, 
-            lambda epoch: 0.99)
+    lr_sch = None
     loss = MyLoss()
     print(f"{model=}")
     print("Training VDVAE Regression")
